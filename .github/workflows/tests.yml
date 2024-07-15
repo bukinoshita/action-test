@@ -130,5 +130,36 @@ jobs:
               process.exit(1);
             } else {
               console.log("All dependencies are pinned.");
+  check-pr-name:
+    runs-on: buildjet-4vcpu-ubuntu-2204
+    container:
+      image: node:20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check PR Name
+        run: |
+          const prName = process.env.GITHUB_HEAD_REF;
+          const validPrefixes = ['feat: ', 'chore: ', 'fix: ', 'refactor: '];
+          const isValidPrefix = validPrefixes.some((prefix) => prName.startsWith(prefix));
+
+          const isValidPRName = (prName) => {
+            return validPrefixes.some((prefix) => {
+              if (prName.startsWith(prefix)) {
+                const restOfPRName = prName.slice(prefix.length);
+                return restOfPRName.length > 0 && restOfPRName[0] === restOfPRName[0].toUpperCase();
+              }
+              return false;
+            });
+          };
+
+          if (!isValidPRName(prName)) {
+            console.error(`Invalid PR name: "${prName}". Must start with one of ${validPrefixes.join(", ")} and the first letter after ": " must be capitalized.`);
+            process.exit(1);
+          } else {
+            console.log(`Valid PR name: "${prName}"`);
+          }
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
             }
           '
