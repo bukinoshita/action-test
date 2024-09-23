@@ -13,7 +13,12 @@ const isValidType = (title) =>
 const validateTitle = (title) => {
 	if (!isValidType(title)) {
 		console.error(
-			`PR title does not follow the required format. It should start with 'feat', 'fix', 'chore', or 'refactor' (lowercased), optionally have a scope with a colon after, and the first letter of the description should be capitalized.`,
+			`PR title does not follow the required format.
+      example: "type: My PR Title"
+      
+      - type: "feat", "fix", "chore", or "refactor"
+      - First letter of the PR title needs to be uppercased
+      `,
 		);
 		process.exit(1);
 	}
