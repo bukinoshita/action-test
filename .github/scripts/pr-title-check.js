@@ -14,11 +14,10 @@ const validateTitle = (title) => {
 	if (!isValidType(title)) {
 		console.error(
 			`PR title does not follow the required format.
-      example: "type: My PR Title"
+  example: "type: My PR Title"
       
-      - type: "feat", "fix", "chore", or "refactor"
-      - First letter of the PR title needs to be uppercased
-      `,
+  - type: "feat", "fix", "chore", or "refactor"
+  - First letter of the PR title needs to be uppercased`,
 		);
 		process.exit(1);
 	}
