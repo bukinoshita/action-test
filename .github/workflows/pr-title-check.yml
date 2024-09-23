@@ -1,0 +1,13 @@
+name: PR Title Check
+on:
+  pull_request:
+    types: [opened, edited]
+jobs:
+  pr-title-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run PR title check
+        run: |
+          node .github/scripts/pr-title-check.js
